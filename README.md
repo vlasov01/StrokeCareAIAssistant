@@ -1,4 +1,4 @@
-# Local AI Voice Chat 
+# Stroke Care AI Assistant (fork from Local AI Voice Chat)
 
 Provides talk in realtime with AI, completely local on your PC, with customizable AI personality and voice.
 
@@ -8,9 +8,9 @@ Provides talk in realtime with AI, completely local on your PC, with customizabl
 
 ## About the Project
 
-Integrates the powerful Zephyr 7B language model with real-time speech-to-text and text-to-speech libraries to create a fast and engaging voicebased local chatbot. 
+Integrates the powerful Phi 3 mini language model with real-time speech-to-text and text-to-speech libraries to create a fast and engaging voicebased local chatbot. 
 
-https://github.com/KoljaB/LocalAIVoiceChat/assets/7604638/cebacdad-8a57-4a03-bfd1-a469730dda51
+https://www.youtube.com/shorts/iHPMkBcCDU4
 
 ## Tech Stack
 
@@ -23,7 +23,7 @@ https://github.com/KoljaB/LocalAIVoiceChat/assets/7604638/cebacdad-8a57-4a03-bfd
 
 ## Notes
 
-This software is in an experimental alpha state and does not provide production ready stability. The current XTTS model used for synthesis still has glitches and also Zephyr - while really good for a 7B model - of course can not compete with the answer quality of GPT 4, Claude or Perplexity.
+This software is in an experimental alpha state and does not provide production ready stability. The current XTTS model used for synthesis still has glitches and also Phi 3 - while really good for a small model - of course can not compete with the answer quality of GPT 4, Claude or Perplexity.
 
 Please take this as a first attempt to provide an early version of a local realtime chatbot.
 
@@ -31,6 +31,7 @@ Please take this as a first attempt to provide an early version of a local realt
 
 - Update to Coqui XTTS 2.0 model
 - Bugfix to RealtimeTTS (download of Coqui model did not work properly)
+- Stroke care AI Assistant setup steps are available at https://github.com/vlasov01/StrokeCareAIAssistant/blob/main/README-AMD.md
 
 ### Prerequisites
 
@@ -152,7 +153,7 @@ This license allows only non-commercial use of a machine learning model and its 
 
 ## Contact
 
-Kolja Beigel  
-- Email: [kolja.beigel@web.de](mailto:kolja.beigel@web.de)  
+Sergey Vlasov  
+- Email: [ai@wiisniper.com](mailto:ai@wiisniper.com)  
 
 Feel free to reach out for any queries or support related to this project.
