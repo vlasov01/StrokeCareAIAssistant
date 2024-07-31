@@ -31,7 +31,7 @@ Please take this as a first attempt to provide an early version of a local realt
 
 - Update to Coqui XTTS 2.0 model
 - Bugfix to RealtimeTTS (download of Coqui model did not work properly)
-- Stroke care AI Assistant setup steps are available at https://github.com/vlasov01/StrokeCareAIAssistant/blob/main/README-AMD.md
+- Added Stroke Care AI Assistant setup steps
 
 ### Prerequisites
 
@@ -52,6 +52,7 @@ You will need a GPU with around 8 GB VRAM to run this in real-time.
 - **Install ROCm v.5.7.1**
     - Download [ROCm SDK version 5.7.1](https://www.amd.com/en/developer/resources/rocm-hub/hip-sdk.html)
     - Follow the provided installation guide.
+    - Follow the [LLMs on RyzenAI with Pytorch](https://github.com/amd/RyzenAI-SW/blob/main/example/transformers/models/llm/docs/README.md)
 
 
 - **FFmpeg**:
@@ -104,7 +105,7 @@ You will need a GPU with around 8 GB VRAM to run this in real-time.
      pip install RealtimeSTT==0.1.7
      pip install RealtimeTTS==0.2.7
      ```
-4. Download zephyr-7b-beta.Q5_K_M.gguf from [here](https://huggingface.co/TheBloke/zephyr-7B-beta-GGUF/tree/main). 
+4. Download Phi-3-mini-4k-instruct-gguf from [here](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf). 
    - Open creation_params.json and enter the filepath to the downloaded model into `model_path`.
    - Adjust n_gpu_layers (0-35, raise if you have more VRAM) and n_threads (number of CPU threads, i recommend not using all available cores but leave some for TTS)
 
@@ -117,13 +118,18 @@ You will need a GPU with around 8 GB VRAM to run this in real-time.
      pip install numpy==1.24.3
      pip install requests==2.31.0
      ```   
+## For AMD Windows users only - setup environment variables from Windows powershell
+     setup-amd.ps1
 
-## Running the Application
+## Running the AI Voice Application
      python ai_voicetalk_local.py
+
+## Running the Dashboard
+     streamlit run show-activity.py
 
 ## Customize
 
-### Change AI personality
+### Change AI personality with information related to a person
 
 Open chat_params.json to change the talk scenario.
 
