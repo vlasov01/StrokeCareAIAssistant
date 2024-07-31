@@ -14,8 +14,8 @@ https://www.youtube.com/shorts/iHPMkBcCDU4
 
 ## Tech Stack
 
-- **[llama_cpp](https://github.com/ggerganov/llama.cpp)** with Zephyr 7B  
-  - library interface for llamabased language models
+- **[llama_cpp](https://github.com/ggerganov/llama.cpp)** with Phi-3-mini4k-instruct  
+  - library interface for llama based language models
 - **[RealtimeSTT](https://github.com/KoljaB/RealtimeSTT)** with faster_whisper  
   - real-time speech-to-text transcription library
 - **[RealtimeTTS](https://github.com/KoljaB/RealtimeTTS)** with Coqui XTTS  
