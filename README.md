@@ -31,6 +31,7 @@ Please take this as a first attempt to provide an early version of a local realt
 
 - Update to Coqui XTTS 2.0 model
 - Bugfix to RealtimeTTS (download of Coqui model did not work properly)
+- Stroke care AI Assistant setup steps are available at https://github.com/vlasov01/StrokeCareAIAssistant/blob/main/README-AMD.md
 
 ### Prerequisites
 
