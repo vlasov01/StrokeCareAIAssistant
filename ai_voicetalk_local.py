@@ -6,6 +6,22 @@ if __name__ == '__main__':
     import json
     import os
 
+    import sqlite3
+    import contextlib
+
+    def execute_statement(statement, parameters=None):
+        with contextlib.closing(sqlite3.connect("interact.db")) as conn: # auto-closes
+            with conn: # auto-commits
+                with contextlib.closing(conn.cursor()) as cursor: # auto-closes
+                    if parameters is None:
+                        # Execute the statement without parameters
+                        cursor.execute(statement)
+                    else:
+                        # Execute the statement with parameters
+                        cursor.execute(statement, parameters)
+
+    execute_statement("CREATE TABLE IF NOT EXISTS prompt (d3 INTEGER, user_text TEXT, output TEXT)")
+
     output = ""
     llama_cpp_cuda = None
 
@@ -25,6 +41,14 @@ if __name__ == '__main__':
             llama_cpp = None
 
     def llama_cpp_lib():
+
+        print(f"number of GPUs: {torch.cuda.device_count()}")
+        print([torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())])
+
+        torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
+        assert torch_ver >= [2, 0], "Requires PyTorch >= 2.0"
+        print("PyTorch Version:", torch.__version__)
+
         if llama_cpp_cuda is None:
             print ("llama_cpp_lib: return llama_cpp")
             return llama_cpp
@@ -89,7 +113,7 @@ if __name__ == '__main__':
     with open('chat_params.json') as f:
         chat_params = json.load(f)
     
-    chat_params = replace_placeholders(chat_params, chat_params["char"], chat_params["user"])
+    #chat_params = replace_placeholders(chat_params, chat_params["char"], chat_params["user"])
     chat_params = replace_placeholders(chat_params, chat_params["char"], chat_params["user"], chat_params["scenario"])
 
     if not completion_params['logits_processor']:
@@ -103,18 +127,19 @@ if __name__ == '__main__':
 
 
     print("Initializing TTS CoquiEngine ...")    
-    # import logging
-    # logging.basicConfig(format='AI Voicetalk: %(message)s', level=logging.DEBUG)
-    # coqui_engine = CoquiEngine(cloning_reference_wav="female.wav", language="en", level=logging.DEBUG)
-    coqui_engine = CoquiEngine(cloning_reference_wav="female.wav", language="en", speed=1.0)
+    import logging
+    logging.basicConfig(format='AI Voicetalk: %(message)s', level=logging.DEBUG)
+    coqui_engine = CoquiEngine(cloning_reference_wav="female.wav", language="en", level=logging.DEBUG)
+    #coqui_engine = CoquiEngine(voice="female.wav", language="en", speed=1.0) 
 
     print("Initializing STT AudioToTextRecorder ...")
-    #stream = TextToAudioStream(coqui_engine, log_characters=True, level=logging.DEBUG)
-    stream = TextToAudioStream(coqui_engine, log_characters=True)
+    stream = TextToAudioStream(coqui_engine, log_characters=True, level=logging.DEBUG)
+    #stream = TextToAudioStream(coqui_engine, log_characters=True)
     recorder = AudioToTextRecorder(model="tiny.en", language="en", spinner=False)
 
 
     print()
+    '''
     while True:
         voice_number = input(f"Select voice (1-5): ")
         voice_path = os.path.join("voices", f"voice{voice_number}.wav")
@@ -125,7 +150,10 @@ if __name__ == '__main__':
         accept_voice = input(f"Accept voice (y/n): ")
         if accept_voice.lower() != "n":
             break
-
+    '''
+    voice_number = 1
+    voice_path = os.path.join("voices", f"voice{voice_number}.wav")
+    coqui_engine.set_voice(voice_path)
 
     clear_console()
     print(f'Scenario: {chat_params["scenario"]}\n\n')
@@ -145,4 +173,6 @@ if __name__ == '__main__':
         stream.feed(generator)
         stream.play(fast_sentence_fragment=True, buffer_threshold_seconds=999, minimum_sentence_length=18, log_synthesized_text=True)
         history.append(f"<|assistant|>\n{output}</s>\n")
-        write_file('last_prompt.txt', create_prompt())
+        #cursor.execute("INSERT INTO prompt VALUES (strftime ('%s', 'now'), ?, ?)", (user_text, output))
+        execute_statement("INSERT INTO prompt VALUES (strftime ('%s', 'now'), ?, ?)", (user_text, output))
+        #write_file('last_prompt.txt', create_prompt())
